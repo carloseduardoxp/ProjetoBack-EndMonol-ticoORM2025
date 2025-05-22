@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,12 +20,14 @@ public class Categoria {
     @Column(name="categoriaid")
     private Integer id;
 
-    @NotBlank(message = "Nome é obrigatório safado")
     @Column(name="categoria")
     private String nome;
 
     @Column(name="descricao")
     private String descricao;
+
+  //  @OneToMany(mappedBy="categoria")
+  //  private List<Produto> produtos;
 
 
 
