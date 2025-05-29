@@ -8,9 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,15 +27,12 @@ public class Produto {
     private Integer codigo;  
 
     @Column(name="produtonome",nullable=false)
-    @NotBlank(message = "Nome é obrigatório")
     private String nome;
 
     @Column(name="preco")
-    @Positive(message = "O preço deve ser maior do que zero")
     private Double preco;
 
     @Column(name="unidadesemestoque")
-    @Min(value = 0, message = "Não existe estoque negativo")
     private Short estoque;
 
     @Column(name="Imagem")

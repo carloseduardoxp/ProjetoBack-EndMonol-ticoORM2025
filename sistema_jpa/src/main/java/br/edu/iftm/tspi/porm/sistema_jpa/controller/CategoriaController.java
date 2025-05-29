@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.iftm.tspi.porm.sistema_jpa.domain.Categoria;
 import br.edu.iftm.tspi.porm.sistema_jpa.dto.CategoriaDto;
+import br.edu.iftm.tspi.porm.sistema_jpa.dto.ProdutoDto;
 import br.edu.iftm.tspi.porm.sistema_jpa.mapper.CategoriaMapper;
+import br.edu.iftm.tspi.porm.sistema_jpa.mapper.ProdutoMapper;
 import br.edu.iftm.tspi.porm.sistema_jpa.repository.CategoriaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -31,10 +33,14 @@ public class CategoriaController {
 
     private final CategoriaMapper mapper;
 
+    private final ProdutoMapper produtoMapper;
+
     public CategoriaController(CategoriaRepository repository,
-                               CategoriaMapper mapper) {
+                               CategoriaMapper mapper,
+                               ProdutoMapper produtoMapper) {
         this.repository = repository;
         this.mapper = mapper;
+        this.produtoMapper = produtoMapper;
     }
 
     @GetMapping
@@ -56,6 +62,16 @@ public class CategoriaController {
                                      () -> 
                                      new EntityNotFoundException("Categoria com id "+ id + " não encontrado"));
         return ResponseEntity.ok(mapper.toDto(categoria));
+    }
+
+    @GetMapping("{id}/produtos")
+    public ResponseEntity<List<ProdutoDto>> buscarProdutosPorCategoriaId(@PathVariable Integer id) {
+        Categoria categoria = repository.findById(id)
+                                .orElseThrow(
+                                     () -> 
+                                     new EntityNotFoundException(
+                                        "Categoria com id "+ id + " não encontrado"));
+        return ResponseEntity.ok(produtoMapper.toDtoList(categoria.getProdutos()));    
     }
 
     @PostMapping
