@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import br.edu.iftm.tspi.porm.sistema_jpa.domain.Produto;
 import br.edu.iftm.tspi.porm.sistema_jpa.dto.RelatorioProdutoClienteDto;
+import br.edu.iftm.tspi.porm.sistema_jpa.dto.RelatorioProdutoPedidoDto;
 
 @Repository
 public interface RelatorioRepository extends JpaRepository<Produto, Long> {
@@ -25,4 +26,16 @@ public interface RelatorioRepository extends JpaRepository<Produto, Long> {
             group by c.nome,pr.produtoNome,p.pedidoId
           """)
     List<RelatorioProdutoClienteDto> getProdutosPorCliente(@Param("clienteID") String clienteID);
+
+
+     @Query(nativeQuery = true,value= """
+            select 
+                   pr.produtoNome as nomeProduto,
+                   sum((dp.precoVenda * quantidade) - desconto) as valor
+            from detalhes_pedido dp, produtos pr
+            where  dp.produtoId = pr.produtoId
+              and dp.pedidoID = :pedidoID
+            group by pr.produtoNome
+          """)
+    List<RelatorioProdutoPedidoDto> getProdutosPorPedido(@Param("pedidoID") Integer numeroPedido);
 }
