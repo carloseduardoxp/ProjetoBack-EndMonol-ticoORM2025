@@ -24,12 +24,11 @@ public class ProdutoDto {
     private Double preco;
 
     @Min(value = 0, message = "Não exsite estoque negativo")
-    private Integer estoque;
+    private Short estoque;
 
     private String caminhoImagem;
 
-    @CategoriaExists(message=" Não existe categoria com o ID informado")
+    @CategoriaExists(message = " Não existe categoria com o ID informado")
     private Integer categoriaId;
-
 
 }

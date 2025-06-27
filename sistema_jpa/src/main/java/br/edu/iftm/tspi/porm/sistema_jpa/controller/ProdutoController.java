@@ -61,6 +61,24 @@ public class ProdutoController {
         return ResponseEntity.ok(mapper.toDto(produto));
     }
 
+    @GetMapping("/maior-preco")
+    public ResponseEntity<List<ProdutoDto>> maiorPreco() {
+        List<Produto> produtos = repository.findMaxPreco();
+        if (produtos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(mapper.toDtoList(produtos));
+    }
+
+    @GetMapping("/maior-preco-nativo")
+    public ResponseEntity<List<ProdutoDto>> maiorPrecoNativo() {
+        List<ProdutoDto> produtos = repository.findMaxPrecoNativo();
+        if (produtos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(produtos);
+    }
+
     @PostMapping
     public ResponseEntity<ProdutoDto> criar(@Valid @RequestBody ProdutoDto produtoDto) {
         Produto produtoSalvo = repository.save(mapper.toEntity(produtoDto));
