@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RelatorioProdutoClienteDto {
+public class CategoriaQuantidadeDTO {
 
-
-    private String nomeCliente;
-    private String nomeProduto;
-    private Double valor;
-
+    private Integer idCategoria;
+    private String nomeCategoria;
+    private Long quantosProdutos;
+    
 }

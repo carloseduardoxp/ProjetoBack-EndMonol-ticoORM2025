@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.iftm.tspi.porm.sistema_jpa.domain.Categoria;
 import br.edu.iftm.tspi.porm.sistema_jpa.dto.CategoriaDto;
+import br.edu.iftm.tspi.porm.sistema_jpa.dto.CategoriaQuantidadeDTO;
 import br.edu.iftm.tspi.porm.sistema_jpa.dto.ProdutoDto;
 import br.edu.iftm.tspi.porm.sistema_jpa.mapper.CategoriaMapper;
 import br.edu.iftm.tspi.porm.sistema_jpa.mapper.ProdutoMapper;
@@ -53,6 +54,11 @@ public class CategoriaController {
                 repository.findByNomeContainingIgnoreCase(nome));
         }
         return ResponseEntity.ok(categorias);
+    }
+
+    @GetMapping("/categoria-quantidade-produtos")
+    public ResponseEntity<List<CategoriaQuantidadeDTO>> buscarCategoriasQuantidade() {
+        return ResponseEntity.ok(repository.contarProdutosPorCategoria());
     }
 
     @GetMapping("{id}")
